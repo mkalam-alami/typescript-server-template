@@ -2,10 +2,11 @@
 
 A template in 300 lines (config files included) to get started with a TypeScript web server. Features:
 
-* [Koa](https://koajs.com/)-powered web server
-* Client-side build without any library
-* Shared code between client and server
 * Live browser reload when code or assets change
+* [Koa](https://koajs.com/)-powered web server
+* Basic client-side build
+* Shared code between client and server (with pretty imports)
+* Convenient logger displaying filenames
 * Production build
 
 ## Setup
