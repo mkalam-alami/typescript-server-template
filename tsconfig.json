@@ -6,7 +6,7 @@
     "baseUrl": ".",
     "paths": {
       "src/*": ["src/*"],
-      "common/*": ["common/*"],
+      "shared/*": ["shared/*"],
       "frontend/*": ["frontend/*"]
     },
     "esModuleInterop": true,

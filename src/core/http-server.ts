@@ -1,4 +1,9 @@
-import log from "src/core/log";
+/**
+ * Initialize the HTTP router and serve static files.
+ * Routes can be registered using the `router` export.
+ */
+
+import log from "shared/core/log";
 import koa from "koa";
 import koaRouter from "koa-router";
 import koaStatic from "koa-static";

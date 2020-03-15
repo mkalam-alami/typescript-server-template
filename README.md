@@ -1,11 +1,12 @@
 # Typescript Server Template
 
-A small template to get started with a TypeScript web server. Features:
+A template in 300 lines (config files included) to get started with a TypeScript web server. Features:
 
-* A client-side TypeScript build
+* [Koa](https://koajs.com/)-powered web server
+* Client-side build without any library
 * Shared code between client and server
 * Live browser reload when code or assets change
-* Support for a production build
+* Production build
 
 ## Setup
 
@@ -16,17 +17,18 @@ npm start
 
 ## Production build
 
+Run locally:
+
 ```
 npm run build
 npm run start:prod
 ```
 
-If you want to keep the production files to a minimum, deployment should only require:
+Export for publishing:
 
-* package.json
-* tsconfig.prod.json
-* dist/ folder
-* static/ folder
-* node_modules/ folder containing at least the packages installed from `npm install --production`
-
-> TODO Actually test this
+```
+npm run export
+cd dist-export # This folder can be published anywhere
+npm install --production
+npm run start:prod
+```

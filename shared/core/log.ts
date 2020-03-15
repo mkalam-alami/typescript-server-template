@@ -1,9 +1,16 @@
+/**
+ * Simple logger with colors and a timestamp.
+ */
+
 import chalk from "chalk";
-import * as path from "path";
-import { ROOT_PATH } from "src/constants";
-import errorStackParser from "error-stack-parser";
+
+export type LoggerMiddleware = (messageParts: string[]) => string[];
 
 class Logger {
+
+  private middleware: LoggerMiddleware[] = [];
+
+  filename = __filename;
 
   debug(...args: any[]) {
     this.log(chalk.blueBright, args);
@@ -21,17 +28,17 @@ class Logger {
     this.log(chalk.redBright, args);
   }
 
-  private log(color: chalk.Chalk, args: any[]) {
-    const timestamp = chalk.green(new Date().toISOString());
-    const callingFile = chalk.gray(this.getCallingFile());
-    const output = color.apply(chalk, args);
-    console.log(`${timestamp} ${callingFile} ${output}`);
+  useMiddleware(middleware: LoggerMiddleware) {
+    this.middleware.push(middleware);
   }
 
-  private getCallingFile(): string {
-    const callingFileFrame = errorStackParser.parse(new Error())
-      .find((frame => frame.fileName.includes(ROOT_PATH) && frame.fileName !== __filename));
-    return path.relative(ROOT_PATH, callingFileFrame.fileName);
+  private log(color: chalk.Chalk, args: any[]) {
+    const timestamp = chalk.green(new Date().toISOString());
+    const output = color.apply(chalk, args);
+
+    let messageParts = [timestamp, output];
+    this.middleware.forEach((middleware) => messageParts = middleware(messageParts));
+    console.log(messageParts.join(' '));
   }
 
 }

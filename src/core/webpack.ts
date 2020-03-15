@@ -1,3 +1,6 @@
+/**
+ * Build the client bundle upon startup (and on every client code change, when using development mode).
+ */
 
 import webpackConfig from "frontend/webpack.config.js";
 import webpack from "webpack";
@@ -9,16 +12,9 @@ export function startWebpack(buildHandler?: webpack.ICompiler.Handler): Promise<
       mode: process.env.NODE_ENV || 'development'
     })
 
-    const buildHandlerProxy = (err, stats) => {
+    compiler.watch({}, (err, stats) => {
       if (!err) resolve(stats); else reject(err);
       if (buildHandler) buildHandler(err, stats);
-    }
-    
-    if (process.env.NODE_ENV !== 'production') {
-      compiler.watch({}, buildHandlerProxy)
-    } else {
-      compiler.run(buildHandlerProxy)
-    }
-
+    })
   })
 }
